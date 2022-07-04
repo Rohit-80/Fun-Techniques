@@ -1,0 +1,77 @@
+
+bool findemptypos(vector<vector<int>> &v,int &row , int &col){
+    rep(i,0,9){
+         rep(j,0,9){
+             if(v[i][j] == 0){
+                row = i;
+                col = j;
+                return true;
+             }
+         }
+    }
+    return false;
+}
+
+bool rows(vector<vector<int>> &v,int row,int num){
+    for(int i = 0; i < 9; i++){
+         if(v[row][i] == num) return false;
+    }
+
+
+    return true;
+}
+bool cols(vector<vector<int>> &v,int col,int num){
+    for(int i = 0; i < 9; i++){
+         if(v[i][col] == num) return false;
+    }
+
+
+    return true;
+}
+
+
+bool grids(vector<vector<int>> &v,int row, int col ,int num){
+     row = row - (row%3);
+     col = col - (col%3);
+    
+      rep(i,0,3){
+        rep(j,0,3){
+            if(v[i+row][j+col] == num) return false;
+        }
+      }
+
+
+    return true;
+}
+
+
+
+bool issafe(vector<vector<int>> &v, int row, int col , int num){
+
+        bool isrow = rows(v,row,num);
+        bool iscol = cols(v,col,num);
+        bool isgrid = grids(v,row,col,num);
+
+     return (isrow && iscol && isgrid);
+}
+
+
+
+bool solver(vector<vector<int>> &v){
+      int row,col;
+     if(!findemptypos(v,row,col)){
+           return true;
+     }
+
+               for(int i = 1; i <= 9; i++){
+                 if(issafe(v,row,col,i)){
+                     v[row][col]  = i;
+
+                      if(solver(v)){
+                         return true;
+                      }
+                      v[row][col] = 0;
+                 }
+            }
+     return false;
+}
