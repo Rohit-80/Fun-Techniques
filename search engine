@@ -1,0 +1,86 @@
+class node {
+    public:
+    node* arr[26];
+    int val = 0;
+};
+
+
+
+
+void insert(pair<string,int> p, node* head) {
+   // trace(p);
+   // return;
+    node * temp = head;
+
+     for(auto a : p.first){
+       
+        if(!temp->arr[a-'a']){
+            temp->arr[a-'a'] = new node();
+        }
+        
+        temp = temp->arr[a-'a'];
+        temp->val = max(temp->val,p.second);
+          
+          // cout<<temp->val<<endl;
+       
+         
+     }
+}
+
+ll check(string s , node* head) {
+
+    node* temp = head;
+    node* next = new node();
+    for(auto a : s){
+        // cout<<a;
+     
+        if(temp->arr[a-'a']){
+           temp =  temp->arr[a-'a'];
+            // cout<<a-'a'</<endl;
+
+        }else return -1ll;
+    }
+
+
+
+    // for(int i=0; i < 26;i++){
+    //    cout<<temp->val<<",";
+    // }
+    //  nl; 
+    next = temp;
+    ll ans = 0;
+    for(int i=0; i < 26;i++){
+        ans = max(ans, (ll)next->val);
+    }
+
+    return ans;
+}
+
+void test() {
+    int n,q; cin >> n >> q;
+    
+    vector<pair<string,int>> v;
+
+     rep(i,0,n){
+         string s; int k; cin>>s>>k;
+         v.push_back({s,k});
+     }
+
+     node * head = new node();
+   for(auto a : v){
+     insert(a,head);
+     // return;
+   }
+    
+   rep(i,0,q){
+      string s; cin>>s;
+      int ans = check(s,head);
+       cout<<ans<<endl; 
+       // return;
+   }
+
+  
+
+
+
+}
