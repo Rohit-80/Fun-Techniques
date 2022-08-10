@@ -1,7 +1,6 @@
-// There is nothin in a catterpillar that tells you its going to be a butterfly ------------------- !
 #include <bits/stdc++.h>
 using namespace std;
-
+/*---------------- using Array ---------------------*/
 class Stack
 {
 public:
@@ -71,28 +70,92 @@ public:
    }
 };
 
+
+/*----------------  using  LinkedList --------------- */
+
+struct node
+{
+   int data;
+   node* next;
+};
+
+class Stack {
+public:
+   node *top = NULL;
+
+   void push(int x) {
+      node * t = new node;
+      if (t == NULL) {
+         cout << "Overflow\n";
+      } else {
+         t->data = x;
+         t->next = top;
+         top = t;
+
+
+
+      }
+   }
+
+   int pop() {
+      node *p;
+      int x = -1;
+      if (top == NULL) {
+         return x;
+      } else {
+         p = top;
+         top = p->next;
+         x = p->data;
+         free(p);
+         return x;
+
+      }
+   }
+
+   int peek(int pos) {
+      node * t = top;
+
+      for (int i = 0 ; t && i < pos - 1; i++) {
+         t = t->next;
+         // cout<<"work"<<endl;
+      }
+      if (t) {
+         return t->data;
+      } else
+      {
+         cout << "Invalid Pos\n";
+         return -1;
+      }
+   }
+
+
+   int stacktop() {
+      if (top == NULL) return -1;
+      else return top->data;
+   }
+
+   int isEmpty() {
+      return top ? 0 : 1;
+   }
+   int isFull() {
+      node * t = new node;
+      int x =  t  ? 0 : 1;
+      free(t);
+      return x;
+   }
+};
+
+
 int main(){
    
     Stack st;
-    st.createStack(0);
-    st.push(1);
-    st.push(2);
-    st.push(3);
-    st.push(4);
     st.push(5);
-    st.push(6);
+    st.push(2);
+    st.push(4);
 
- // cout<<st.stacktop()<<endl;
- // st.pop();
-// cout<<st.isFull()<<endl;
+    st.pop();
+    st.pop();
+    st.pop();
 
- // st.display();
-
-    // cout<<st.pop();
-
-
-
-    
-     // cout<<st.top<<endl;
-
+    cout<<st.isEmpty()<<endl;
 }
