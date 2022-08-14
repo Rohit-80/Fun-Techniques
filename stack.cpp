@@ -159,3 +159,83 @@ int main(){
 
     cout<<st.isEmpty()<<endl;
 }
+
+
+
+class Solution
+{
+public:
+    int ope (char c){
+        if(c == '-' || c == '+') return 1;
+        if(c == '*' || c == '/') return 2;
+    }
+    
+    bool operand(char c ){
+        return (c == '-' || c == '+' || c == '*' || c == '/');
+    }
+    
+    string infixToPostfix(string infix)
+    {
+
+      
+         stack<char> s;
+         string postfix;
+         for(auto a : infix){
+             if(a != '(' && a != ')'){
+                 if(!operand(a)){
+                   postfix += a;
+                 }else{
+                  
+                  
+                  while(!s.empty() && s.top() != '(' && ope(s.top()) >= ope(a)){
+                     postfix += s.top();
+                     s.pop();
+                  }
+                  s.push(a);
+                  
+                  
+                  
+                  
+               }
+            }else if(a == '('){
+              s.push('(');  
+            }else{
+                while(s.top() != '('){
+                    postfix += s.top();
+                    s.pop();
+                }
+                trace(postfix);
+                s.pop();
+            }
+         }
+         
+         while(!s.empty()){
+            postfix += s.top();
+            s.pop();
+         }
+         return postfix;
+         
+    }
+};
+
+int main() {
+ 
+    ios_base::sync_with_stdio(false); cin.tie(NULL);
+    auto start = std::chrono::high_resolution_clock::now();
+    
+    ll t = 1;
+    // cin>>t;
+    
+        // while(t--){
+        //      test();
+        // }
+  
+
+    Solution s;
+     cout<<s.infixToPostfix("(A+B)*(C/D)")<<endl;
+ 
+    auto stop = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::nanoseconds>(stop - start);
+    cerr << "T_taken : " << ((long double)duration.count()) / ((long double) 1e9) << "s " << endl;
+    return 0;
+}
