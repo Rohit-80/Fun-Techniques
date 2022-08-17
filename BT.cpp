@@ -91,9 +91,74 @@ void PostOrderT(node* root){
 }
 
 
+int heightOfBT(node * root){
+
+    int x,y;
+      if(root){
+        x = heightOfBT(root->lchild);
+        y = heightOfBT(root->rchild);
+
+        if(x > y) return x+1;
+        else return y+1;
+      }
+
+      return 0;
+
+}
+
+int countNodeBT(node * root){
+
+    int x,y;
+      if(root){
+        x = countNodeBT(root->lchild);
+        y = countNodeBT(root->rchild);
+
+       return x+y+1;
+      }
+
+      return 0;
+
+}
+
+int countLeafNodes(node * root){
+
+      if(!root){
+        return 0;
+      }
+    int x = 0,y = 0;
+      if(!root->lchild && !root->rchild){
+        x = countLeafNodes(root->lchild);
+        y = countLeafNodes(root->rchild);
+    
+        return x+y+1;
+      }
+
+      return countLeafNodes(root->lchild) + countLeafNodes(root->rchild); 
+
+}
+
+void given_level_traversal(node* root,int lvl){
+      if(root == NULL) return;
+
+     if(lvl == 0){
+        cout<<root->data<<" ";
+     }else{
+        given_level_traversal(root->lchild,lvl - 1);
+        given_level_traversal(root->rchild,lvl - 1);
+     }
+}
+
+
+
 int main(){
    
    node* root = createBinaryTree();
    preorderT(root);
+
+
+   cout<<" \n \n\n \n\n";
+
+   cout<<countLeafNodes(root)<<endl;
+   
    
 }
